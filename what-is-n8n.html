@@ -3,69 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n8n & AI: Automate Your Intelligence - What is n8n?</title>
-    <!-- Tailwind CSS CDN for effortless styling -->
+    <title>n8n & AI: Automate Your Intelligence - n8n & AI</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Font: Roboto for a clean, Google-like look -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Google Font: Inter (closest open-source alternative to San Francisco/custom fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Global styles for Roboto font and smooth scrolling */
-        body {
-            font-family: 'Roboto', sans-serif;
+        /* Base styles for Inter font and dark theme (Cursor.com default) */
+        html, body {
+            height: 100%; /* CRITICAL: Ensures full viewport height */
+            width: 100%;  /* CRITICAL: Ensures full viewport width */
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Pure black background */
+            color: #ffffff; /* Pure white text */
             scroll-behavior: smooth;
-            background-color: #f0f4f8; /* Light blue-gray background, similar to Google */
-            color: #334155; /* Dark gray text */
-            overflow-x: hidden; /* Prevent horizontal scrollbar from parallax effect */
-            position: relative; /* Needed for absolute positioning of background */
-            min-height: 100vh; /* Ensure body takes full viewport height */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        body {
+            min-height: 100vh; /* Ensures content pushes footer down */
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Dark mode specific styles */
-        html.dark body {
-            background-color: #1a1a1a; /* Dark background */
-            color: #e0e0e0; /* Light gray text */
+        /* Light mode styles (default Tailwind classes) */
+        .header-bg {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
+        .header-link-hover:hover {
+            background-color: #f0f0f0;
+            color: #1a1a1a;
+        }
+        .header-link-active {
+            background-color: #e0e0e0;
+            color: #1a1a1a;
+        }
+        .content-card {
+            background-color: #ffffff;
+            border-color: #e0e0e0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .text-primary-color { /* Unified primary text color class */
+            color: #1a1a1a;
+        }
+        .text-secondary-color { /* Unified secondary text color class */
+            color: #666666;
+        }
+        .button-primary {
+            background-color: #3b82f6; /* Blue accent for primary button */
+            color: #ffffff;
+            border: 1px solid #3b82f6;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for light mode */
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+        .button-secondary {
+            background-color: #f0f0f0;
+            color: #1a1a1a;
+            border: 1px solid #d0d0d0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle shadow for light mode */
+        }
+        .button-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        .footer-bg {
+            background-color: #f8f8f8;
+            color: #666666;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer-link-hover:hover {
+            color: #1a1a1a;
+        }
+        .toggle-bg {
+            background-color: #e0e0e0;
+            color: #1a1a1a;
+        }
+        .toggle-bg:hover {
+            background-color: #d0d0d0;
+        }
+        .toggle-icon {
+            color: #1a1a1a;
+        }
+        .input-field {
+            background-color: #ffffff;
+            border-color: #d0d0d0;
+            color: #1a1a1a;
+        }
+        .input-field::placeholder {
+            color: #999999;
+        }
+        .response-box {
+            background-color: #f8f8f8;
+            border-color: #e0e0e0;
+            color: #333333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+
+        /* Dark mode overrides (applied when html has 'dark' class) */
         html.dark .header-bg {
-            background-color: #2a2a2a; /* Darker header */
-            color: #e0e0e0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.18);
+            background-color: #000000;
+            color: #ffffff;
+            box-shadow: none;
+            border-bottom: 1px solid #1a1a1a;
         }
         html.dark .header-link-hover:hover {
-            background-color: #3a3a3a;
+            background-color: #1a1a1a;
         }
         html.dark .header-link-active {
-            background-color: #4a4a4a;
-            color: #ffffff;
+            background-color: #2a2a2a;
         }
         html.dark .content-card {
-            background-color: #2a2a2a;
-            border-color: #3a3a3a;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
-        }
-        html.dark .text-primary-dark {
-            color: #ffffff; /* White for primary text in dark mode */
-        }
-        html.dark .text-secondary-dark {
-            color: #b0b0b0; /* Lighter gray for secondary text in dark mode */
-        }
-        html.dark .input-field {
-            background-color: #3a3a3a;
-            border-color: #4a4a4a;
-            color: #e0e0e0;
-            placeholder-color: #909090;
-        }
-        html.dark .response-box {
             background-color: #1a1a1a;
-            border-color: #3a3a3a;
-            color: #e0e0e0;
-            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+            border: 1px solid #2a2a2a;
+            box-shadow: none;
+        }
+        html.dark .text-primary-color {
+            color: #ffffff;
+        }
+        html.dark .text-secondary-color {
+            color: #b0b0b0;
+        }
+        html.dark .button-primary {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: 1px solid #3b82f6;
+            box-shadow: none;
+        }
+        html.dark .button-primary:hover {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+        html.dark .button-secondary {
+            background-color: #000000;
+            color: #ffffff;
+            border: 1px solid #4a4a4a;
+            box-shadow: none;
+        }
+        html.dark .button-secondary:hover {
+            background-color: #1a1a1a;
+            border-color: #6a6a6a;
         }
         html.dark .footer-bg {
-            background-color: #0d0d0d;
+            background-color: #000000;
             color: #909090;
+            border-top: 1px solid #1a1a1a;
         }
         html.dark .footer-link-hover:hover {
             color: #ffffff;
+        }
+        html.dark .toggle-bg {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+        html.dark .toggle-bg:hover {
+            background-color: #3a3a3a;
+        }
+        html.dark .toggle-icon {
+            color: #e0e0e0;
+        }
+        html.dark .input-field {
+            background-color: #1a1a1a;
+            border-color: #3a3a3a;
+            color: #ffffff;
+        }
+        html.dark .input-field::placeholder {
+            color: #808080;
+        }
+        html.dark .response-box {
+            background-color: #000000;
+            border-color: #2a2a2a;
+            color: #e0e0e0;
+            box-shadow: none;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a4a4a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6a6a6a;
+        }
+        html.light ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+        }
+        html.light ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+        }
+        html.light ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        /* Spinner (consistent across themes) */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-left-color: #ffffff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        html.light .spinner {
+            border-color: rgba(0, 0, 0, 0.1);
+            border-left-color: #333333;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Dynamic Blob Background Styles */
@@ -77,8 +234,8 @@
             height: 100%;
             overflow: hidden;
             z-index: -1;
-            filter: blur(80px); /* Apply blur to the entire container */
-            opacity: 0.7; /* Make it subtle */
+            filter: blur(60px); /* Slightly less blur for more definition */
+            opacity: 0.9; /* Increased opacity for better visibility */
         }
 
         .blob {
@@ -86,13 +243,14 @@
             border-radius: 50%;
             transition: transform 0.1s ease-out, background 0.3s ease-in-out; /* Smooth movement and color change */
             will-change: transform; /* Optimize for animation */
+            animation: pulse 10s infinite alternate; /* Subtle continuous movement */
         }
 
-        /* Light mode blob colors */
-        .blob-1 { background: radial-gradient(circle at center, #a5b4fc, #6366f1); width: 400px; height: 400px; top: 10%; left: 15%; }
-        .blob-2 { background: radial-gradient(circle at center, #c4b5fd, #a78bfa); width: 300px; height: 300px; top: 60%; left: 70%; }
-        .blob-3 { background: radial-gradient(circle at center, #93c5fd, #3b82f6); width: 500px; height: 500px; top: -10%; left: 50%; }
-        .blob-4 { background: radial-gradient(circle at center, #fbcfe8, #ec4899); width: 250px; height: 250px; top: 40%; left: 5%; }
+        /* Define initial positions and sizes for blobs */
+        .blob-1 { background: radial-gradient(circle at center, #a5b4fc, #6366f1); width: 450px; height: 450px; top: 5%; left: 10%; }
+        .blob-2 { background: radial-gradient(circle at center, #c4b5fd, #a78bfa); width: 350px; height: 350px; top: 55%; left: 65%; }
+        .blob-3 { background: radial-gradient(circle at center, #93c5fd, #3b82f6); width: 550px; height: 550px; top: -15%; left: 45%; }
+        .blob-4 { background: radial-gradient(circle at center, #fbcfe8, #ec4899); width: 300px; height: 300px; top: 35%; left: 0%; }
 
         /* Dark mode blob colors */
         html.dark .blob-1 { background: radial-gradient(circle at center, #6366f1, #4f46e5); }
@@ -100,45 +258,11 @@
         html.dark .blob-3 { background: radial-gradient(circle at center, #3b82f6, #2563eb); }
         html.dark .blob-4 { background: radial-gradient(circle at center, #ec4899, #db2777); }
 
-
-        /* Custom spinner for loading states */
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #4285F4; /* Google Blue */
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-        }
-        html.dark .spinner {
-            border-color: rgba(255, 255, 255, 0.3);
-            border-left-color: #ffffff; /* White in dark mode */
-        }
-
-        /* Custom scrollbar for improved aesthetics */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #e2e8f0; /* Lighter track */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #94a3b8; /* Medium gray thumb */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #64748b; /* Darker gray on hover */
-        }
-        html.dark ::-webkit-scrollbar-track {
-            background: #2a2a2a;
-        }
-        html.dark ::-webkit-scrollbar-thumb {
-            background: #555;
-        }
-        html.dark ::-webkit-scrollbar-thumb:hover {
-            background: #777;
+        /* Keyframes for subtle pulsing animation */
+        @keyframes pulse {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.05) translate(5px, 5px); }
+            100% { transform: scale(1) translate(0, 0); }
         }
     </style>
 </head>
@@ -153,24 +277,23 @@
     </div>
 
     <!-- Header and Navigation -->
-    <header class="header-bg bg-white text-gray-800 shadow-md py-4">
+    <header class="header-bg py-4">
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-            <a href="index.html" class="text-3xl font-bold mb-4 md:mb-0 hover:text-blue-600 transition duration-300">
+            <a href="index.html" class="text-3xl font-bold mb-4 md:mb-0 hover:text-gray-400 transition duration-300">
                 AI Automation Hub
             </a>
             <nav class="flex items-center">
                 <ul class="flex flex-wrap justify-center space-x-2 md:space-x-4">
-                    <li><a href="index.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 hover:bg-gray-100 header-link-hover">Home</a></li>
-                    <li><a href="what-is-n8n.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 hover:bg-gray-100 active header-link-active">What is n8n?</a></li>
-                    <li><a href="n8n-ai.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 hover:bg-gray-100 header-link-hover">n8n & AI</a></li>
-                    <li><a href="use-cases.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 hover:bg-gray-100 header-link-hover">Use Cases</a></li>
+                    <li><a href="index.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 header-link-hover">Home</a></li>
+                    <li><a href="what-is-n8n.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 header-link-hover">What is n8n?</a></li>
+                    <li><a href="use-cases.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 header-link-hover">Use Cases</a></li>
                 </ul>
                 <!-- Dark Mode Toggle -->
-                <button id="theme-toggle" class="ml-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <svg id="sun-icon" class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <button id="theme-toggle" class="ml-4 p-2 rounded-full toggle-bg transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg id="sun-icon" class="w-6 h-6 toggle-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.325 6.757l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
-                    <svg id="moon-icon" class="w-6 h-6 text-gray-700 dark:text-gray-300 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg id="moon-icon" class="w-6 h-6 toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                     </svg>
                 </button>
@@ -178,49 +301,52 @@
         </div>
     </header>
 
-    <!-- Main Content Area - What is n8n? Section -->
+    <!-- Main Content Area - n8n & AI Section -->
     <main class="flex-grow container mx-auto px-4 py-8 md:py-12">
-        <section id="what-is-n8n-content" class="content-card bg-white p-8 md:p-12 rounded-xl shadow-lg border border-gray-200 mb-8">
-            <h2 class="text-4xl font-bold text-gray-800 text-primary-dark mb-6 text-center">What is n8n?</h2>
+        <section id="n8n-ai-content" class="content-card p-8 md:p-12 rounded-xl border mb-8">
+            <h2 class="text-4xl font-bold text-primary-color mb-6 text-center">n8n & Artificial Intelligence</h2>
             <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                    <p class="text-lg text-gray-700 text-secondary-dark mb-4 leading-relaxed">
-                        <span class="font-bold">n8n</span> (pronounced "n-eight-n") is a powerful, open-source workflow automation tool. It allows you to connect various applications, APIs, and services to automate tasks and build complex workflows without writing much code. Think of it as a bridge that brings your digital tools together.
-                    </p>
-                    <ul class="list-disc list-inside text-gray-600 text-secondary-dark space-y-2">
-                        <li><span class="font-bold">Low-Code/No-Code:</span> Build sophisticated automations with a visual drag-and-drop interface.</li>
-                        <li><span class="font-bold">Extensible:</span> Connect to hundreds of apps and services out-of-the-box.</li>
-                        <li><span class="font-bold">Self-Hostable:</span> Run it on your own server for full control and privacy.</li>
-                        <li><span class="font-bold">Community Driven:</span> A vibrant community provides support and new integrations.</li>
-                    </ul>
+                <div class="flex justify-center items-center order-2 md:order-1">
+                    <!-- Placeholder for AI integration visual -->
+                    <img src="https://placehold.co/400x250/F3E8FF/6B21A8?text=AI+Integration+Diagram" alt="AI Integration Diagram" class="rounded-lg shadow-md max-w-full h-auto">
                 </div>
-                <div class="flex justify-center items-center">
-                    <!-- Placeholder for n8n visual -->
-                    <img src="https://placehold.co/400x250/E0F2FE/1E40AF?text=n8n+Workflow+Example" alt="n8n Workflow Example" class="rounded-lg shadow-md max-w-full h-auto">
+                <div class="order-1 md:order-2">
+                    <p class="text-lg text-secondary-color mb-4 leading-relaxed">
+                        The true power of n8n emerges when combined with Artificial Intelligence. n8n acts as the orchestrator, connecting your data and existing tools to cutting-edge AI models, including Large Language Models (LLMs) like Gemini.
+                    </p>
+                    <p class="text-lg text-secondary-color mb-4 leading-relaxed">
+                        This integration allows you to:
+                    </p>
+                    <ul class="list-disc list-inside text-secondary-color space-y-2">
+                        <li><span class="font-bold">Automate Content Generation:</span> Create articles, emails, social media posts.</li>
+                        <li><span class="font-bold">Enhance Data Processing:</span> Summarize text, extract entities, classify information.</li>
+                        <li><span class="font-bold">Build Smart Chatbots:</span> Connect user queries to AI for intelligent responses.</li>
+                        <li><span class="font-bold">Automate Image Generation:</span> Trigger AI image creation based on events.</li>
+                    </ul>
                 </div>
             </div>
             <div class="mt-8 text-center">
-                <a href="https://n8n.io/" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-105">
-                    Learn More about n8n
+                <a href="use-cases.html" class="button-primary font-semibold py-3 px-8 rounded-lg transform transition duration-300 ease-in-out hover:scale-105">
+                    See Real-World Use Cases
                 </a>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="footer-bg bg-gray-100 text-gray-600 py-8 mt-auto">
+    <footer class="footer-bg py-8 mt-auto">
         <div class="container mx-auto px-4 text-center">
             <p class="mb-4">&copy; 2025 AI Automation Hub. All rights reserved. 💡</p>
             <div class="flex justify-center space-x-6">
-                <a href="https://github.com/Santonastaso" target="_blank" rel="noopener noreferrer" class="footer-link-hover text-gray-600 hover:text-blue-600 transition duration-300">
+                <a href="https://github.com/Santonastaso" target="_blank" rel="noopener noreferrer" class="footer-link-hover transition duration-300">
                     <svg class="w-6 h-6 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.6.111.819-.258.819-.579 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.542-1.309-1.328-1.652-1.328-1.652-1.089-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.493.998.108-.776.418-1.305.762-1.604-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.381 1.236-3.221-.124-.3-.535-1.524.118-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.876.118 3.176.771.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .321.217.693.823.579C20.562 21.807 24 17.302 24 12 24 5.373 18.627 0 12 0z"/></svg>
                     GitHub
                 </a>
-                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="footer-link-hover text-gray-600 hover:text-blue-600 transition duration-300">
+                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="footer-link-hover transition duration-300">
                     <svg class="w-6 h-6 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.373-.027-3.149-1.919-3.149-1.922 0-2.211 1.501-2.211 3.047v5.671h-3.554v-11.999h3.415v1.661h.046c.477-.9 1.637-1.919 3.36-1.919 3.596 0 4.256 2.366 4.256 5.424v6.233zM5.233 7.022c-1.802 0-3.265-1.463-3.265-3.266 0-1.802 1.463-3.265 3.265-3.265s3.265 1.463 3.265 3.265c0 1.803-1.463 3.266-3.265 3.266zm-1.789 13.43h3.578v-11.999h-3.578v11.999z"/></svg>
                     LinkedIn
                 </a>
-                <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer" class="footer-link-hover text-gray-600 hover:text-blue-600 transition duration-300">
+                <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer" class="footer-link-hover transition duration-300">
                     <svg class="w-6 h-6 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.799-1.574 2.162-2.723-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.794 6.045-4.091-.205-7.719-2.165-10.148-5.144-.418.71-.676 1.543-.676 2.43 0 1.61.871 3.03 2.177 3.879-.809-.026-1.566-.247-2.229-.616v.08c0 2.694 1.913 4.934 4.46 5.422-.465.127-.959.192-1.472.192-.362 0-.71-.035-1.05-.1.702 2.213 2.787 3.83 5.235 3.871-1.902 1.485-4.307 2.37-6.92 2.37-.45 0-.893-.029-1.326-.078 2.929 1.893 6.405 3 10.148 3 12.134 0 18.67-10.024 18.67-18.67 0-.58-.013-1.16-.035-1.725.96-.695 1.795-1.562 2.455-2.559z"/></svg>
                     Twitter
                 </a>
@@ -254,7 +380,7 @@
             if (savedTheme) {
                 setTheme(savedTheme);
             } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                // Check OS preference if no theme is saved
+                // Default to dark if OS preference is dark
                 setTheme('dark');
             } else {
                 setTheme('light'); // Default to light
@@ -271,28 +397,33 @@
         });
 
         // --- Dynamic Blob Background Animation Logic ---
-        const blobContainer = document.querySelector('.blob-container');
-        const blobs = document.querySelectorAll('.blob');
-        const movementStrength = 0.02; // Adjust for more/less movement
+        document.addEventListener('DOMContentLoaded', () => {
+            const blobContainer = document.querySelector('.blob-container');
+            const blobs = document.querySelectorAll('.blob');
+            const movementStrength = 0.02; // Adjust for more/less movement
 
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
+            // Only attach mousemove listener if blobs are found
+            if (blobContainer && blobs.length > 0) {
+                document.addEventListener('mousemove', (e) => {
+                    const mouseX = e.clientX;
+                    const mouseY = e.clientY;
 
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
 
-            // Calculate movement based on mouse position relative to center
-            const moveX = (mouseX - centerX) * movementStrength;
-            const moveY = (mouseY - centerY) * movementStrength;
+                    // Calculate movement based on mouse position relative to center
+                    const moveX = (mouseX - centerX) * movementStrength;
+                    const moveY = (mouseY - centerY) * movementStrength;
 
-            blobs.forEach((blob, index) => {
-                // Apply different movement factors to each blob for a layered effect
-                const factorX = (index + 1) * 0.5;
-                const factorY = (index + 1) * 0.5;
+                    blobs.forEach((blob, index) => {
+                        // Apply different movement factors to each blob for a layered effect
+                        const factorX = (index + 1) * 0.5;
+                        const factorY = (index + 1) * 0.5;
 
-                blob.style.transform = `translate(${moveX * factorX}px, ${moveY * factorY}px)`;
-            });
+                        blob.style.transform = `translate(${moveX * factorX}px, ${moveY * factorY}px)`;
+                    });
+                });
+            }
         });
     </script>
 </body>
