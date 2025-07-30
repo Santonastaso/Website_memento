@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n8n & AI: Automate Your Intelligence - n8n & AI v2</title>
+    <title>n8n & AI: Automate Your Intelligence - n8n & AI</title>
     <!-- Tailwind CSS CDN for effortless styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Font: Roboto for a clean, Google-like look -->
@@ -15,6 +15,9 @@
             scroll-behavior: smooth;
             background-color: #f0f4f8; /* Light blue-gray background, similar to Google */
             color: #334155; /* Dark gray text */
+            overflow-x: hidden; /* Prevent horizontal scrollbar from parallax effect */
+            position: relative; /* Needed for absolute positioning of background */
+            min-height: 100vh; /* Ensure body takes full viewport height */
         }
 
         /* Dark mode specific styles */
@@ -65,6 +68,38 @@
             color: #ffffff;
         }
 
+        /* Dynamic Blob Background Styles */
+        .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            filter: blur(80px); /* Apply blur to the entire container */
+            opacity: 0.7; /* Make it subtle */
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            transition: transform 0.1s ease-out, background 0.3s ease-in-out; /* Smooth movement and color change */
+            will-change: transform; /* Optimize for animation */
+        }
+
+        /* Light mode blob colors */
+        .blob-1 { background: radial-gradient(circle at center, #a5b4fc, #6366f1); width: 400px; height: 400px; top: 10%; left: 15%; }
+        .blob-2 { background: radial-gradient(circle at center, #c4b5fd, #a78bfa); width: 300px; height: 300px; top: 60%; left: 70%; }
+        .blob-3 { background: radial-gradient(circle at center, #93c5fd, #3b82f6); width: 500px; height: 500px; top: -10%; left: 50%; }
+        .blob-4 { background: radial-gradient(circle at center, #fbcfe8, #ec4899); width: 250px; height: 250px; top: 40%; left: 5%; }
+
+        /* Dark mode blob colors */
+        html.dark .blob-1 { background: radial-gradient(circle at center, #6366f1, #4f46e5); }
+        html.dark .blob-2 { background: radial-gradient(circle at center, #a78bfa, #8b5cf6); }
+        html.dark .blob-3 { background: radial-gradient(circle at center, #3b82f6, #2563eb); }
+        html.dark .blob-4 { background: radial-gradient(circle at center, #ec4899, #db2777); }
+
 
         /* Custom spinner for loading states */
         .spinner {
@@ -109,6 +144,14 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
+    <!-- Dynamic Blob Background Element -->
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
     <!-- Header and Navigation -->
     <header class="header-bg bg-white text-gray-800 shadow-md py-4">
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
@@ -121,7 +164,6 @@
                     <li><a href="what-is-n8n.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 hover:bg-gray-100 header-link-hover">What is n8n?</a></li>
                     <li><a href="n8n-ai.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 hover:bg-gray-100 active header-link-active">n8n & AI</a></li>
                     <li><a href="use-cases.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 hover:bg-gray-100 header-link-hover">Use Cases</a></li>
-                    <li><a href="try-gemini.html" class="nav-link px-4 py-2 rounded-lg text-sm md:text-base font-medium transition duration-300 hover:bg-gray-100 header-link-hover">Try Gemini</a></li>
                 </ul>
                 <!-- Dark Mode Toggle -->
                 <button id="theme-toggle" class="ml-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -153,10 +195,10 @@
                         This integration allows you to:
                     </p>
                     <ul class="list-disc list-inside text-gray-600 text-secondary-dark space-y-2">
-                        <li>**Automate Content Generation:** Create articles, emails, social media posts.</li>
-                        <li>**Enhance Data Processing:** Summarize text, extract entities, classify information.</li>
-                        <li>**Build Smart Chatbots:** Connect user queries to AI for intelligent responses.</li>
-                        <li>**Automate Image Generation:** Trigger AI image creation based on events.</li>
+                        <li><span class="font-bold">Automate Content Generation:</span> Create articles, emails, social media posts.</li>
+                        <li><span class="font-bold">Enhance Data Processing:</span> Summarize text, extract entities, classify information.</li>
+                        <li><span class="font-bold">Build Smart Chatbots:</span> Connect user queries to AI for intelligent responses.</li>
+                        <li><span class="font-bold">Automate Image Generation:</span> Trigger AI image creation based on events.</li>
                     </ul>
                 </div>
             </div>
@@ -229,6 +271,31 @@
             } else {
                 setTheme('dark');
             }
+        });
+
+        // --- Dynamic Blob Background Animation Logic ---
+        const blobContainer = document.querySelector('.blob-container');
+        const blobs = document.querySelectorAll('.blob');
+        const movementStrength = 0.02; // Adjust for more/less movement
+
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+
+            // Calculate movement based on mouse position relative to center
+            const moveX = (mouseX - centerX) * movementStrength;
+            const moveY = (mouseY - centerY) * movementStrength;
+
+            blobs.forEach((blob, index) => {
+                // Apply different movement factors to each blob for a layered effect
+                const factorX = (index + 1) * 0.5;
+                const factorY = (index + 1) * 0.5;
+
+                blob.style.transform = `translate(${moveX * factorX}px, ${moveY * factorY}px)`;
+            });
         });
     </script>
 </body>
