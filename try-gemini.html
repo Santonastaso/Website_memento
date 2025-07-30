@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n & AI: Automate Your Intelligence - Try Gemini</title>
+    <!-- Tailwind CSS CDN for effortless styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter for a clean, modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Global styles for Inter font and smooth scrolling */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f8fafc; /* Light blue-gray background */
+            color: #334155; /* Dark gray text */
+        }
+        /* Custom spinner for loading states */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-left-color: #ffffff; /* White spinner */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        /* Active navigation link styling */
+        .nav-link.active {
+            @apply bg-blue-700 text-white shadow-lg;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header and Navigation -->
+    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg py-4">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+            <a href="index.html" class="text-3xl font-extrabold mb-4 md:mb-0 hover:text-blue-100 transition duration-300">
+                AI Automation Hub
+            </a>
+            <nav>
+                <ul class="flex flex-wrap justify-center space-x-2 md:space-x-4">
+                    <li><a href="index.html" class="nav-link px-4 py-2 rounded-lg font-semibold transition duration-300 hover:bg-blue-700 hover:shadow-md">Home</a></li>
+                    <li><a href="what-is-n8n.html" class="nav-link px-4 py-2 rounded-lg font-semibold transition duration-300 hover:bg-blue-700 hover:shadow-md">What is n8n?</a></li>
+                    <li><a href="n8n-ai.html" class="nav-link px-4 py-2 rounded-lg font-semibold transition duration-300 hover:bg-blue-700 hover:shadow-md">n8n & AI</a></li>
+                    <li><a href="use-cases.html" class="nav-link px-4 py-2 rounded-lg font-semibold transition duration-300 hover:bg-blue-700 hover:shadow-md">Use Cases</a></li>
+                    <li><a href="try-gemini.html" class="nav-link px-4 py-2 rounded-lg font-semibold transition duration-300 hover:bg-blue-700 hover:shadow-md active">Try Gemini</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area - Try Gemini Section (Interactive AI Demo) -->
+    <main class="flex-grow container mx-auto px-4 py-8 md:py-12">
+        <section id="try-gemini-content" class="bg-white p-8 md:p-12 rounded-xl shadow-lg border border-gray-100 mb-8">
+            <h2 class="text-4xl font-extrabold text-blue-800 mb-6 text-center">Experience Gemini AI</h2>
+            <p class="text-lg text-gray-700 text-center max-w-2xl mx-auto mb-8">
+                Interact directly with Google's Gemini AI model. Type a question or a prompt below, and see the power of large language models in action.
+            </p>
+            <div class="max-w-xl mx-auto">
+                <textarea id="gemini-input" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 mb-4 resize-y text-lg" rows="6" placeholder="e.g., Explain quantum computing in simple terms, or give me a recipe for a quick dinner."></textarea>
+                <button id="gemini-button" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md w-full flex items-center justify-center">
+                    <span id="button-text">Ask Gemini</span>
+                    <div id="loading-spinner" class="spinner ml-3 hidden"></div>
+                </button>
+                <div id="gemini-response" class="mt-6 p-6 bg-gray-50 rounded-lg text-left text-gray-700 border border-gray-200 min-h-[150px] flex items-center justify-center overflow-auto">
+                    <p id="response-placeholder" class="text-gray-400 text-center">Your AI-generated response will appear here.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-4">&copy; 2025 AI Automation Hub. All rights reserved.</p>
+            <div class="flex justify-center space-x-6">
+                <a href="https://github.com/Santonastaso" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition duration-300">
+                    <svg class="w-6 h-6 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.6.111.819-.258.819-.579 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.542-1.309-1.328-1.652-1.328-1.652-1.089-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.493.998.108-.776.418-1.305.762-1.604-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.381 1.236-3.221-.124-.3-.535-1.524.118-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.876.118 3.176.771.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .321.217.693.823.579C20.562 21.807 24 17.302 24 12 24 5.373 18.627 0 12 0z"/></svg>
+                    GitHub
+                </a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition duration-300">
+                    <svg class="w-6 h-6 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.373-.027-3.149-1.919-3.149-1.922 0-2.211 1.501-2.211 3.047v5.671h-3.554v-11.999h3.415v1.661h.046c.477-.9 1.637-1.919 3.36-1.919 3.596 0 4.256 2.366 4.256 5.424v6.233zM5.233 7.022c-1.802 0-3.265-1.463-3.265-3.266 0-1.802 1.463-3.265 3.265-3.265s3.265 1.463 3.265 3.265c0 1.803-1.463 3.266-3.265 3.266zm-1.789 13.43h3.578v-11.999h-3.578v11.999z"/></svg>
+                    LinkedIn
+                </a>
+                <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition duration-300">
+                    <svg class="w-6 h-6 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.799-1.574 2.162-2.723-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.794 6.045-4.091-.205-7.719-2.165-10.148-5.144-.418.71-.676 1.543-.676 2.43 0 1.61.871 3.03 2.177 3.879-.809-.026-1.566-.247-2.229-.616v.08c0 2.694 1.913 4.934 4.46 5.422-.465.127-.959.192-1.472.192-.362 0-.71-.035-1.05-.1.702 2.213 2.787 3.83 5.235 3.871-1.902 1.485-4.307 2.37-6.92 2.37-.45 0-.893-.029-1.326-.078 2.929 1.893 6.405 3 10.148 3 12.134 0 18.67-10.024 18.67-18.67 0-.58-.013-1.16-.035-1.725.96-.695 1.795-1.562 2.455-2.559z"/></svg>
+                    Twitter
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Gemini API Integration Logic ---
+        const geminiInput = document.getElementById('gemini-input');
+        const geminiButton = document.getElementById('gemini-button');
+        const geminiResponseDiv = document.getElementById('gemini-response');
+        const responsePlaceholder = document.getElementById('response-placeholder');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const buttonText = document.getElementById('button-text');
+
+        // Exponential backoff parameters
+        const MAX_RETRIES = 5;
+        const INITIAL_DELAY_MS = 1000; // 1 second
+
+        /**
+         * Calls the Gemini API with exponential backoff.
+         * @param {object} payload The request payload for the Gemini API.
+         * @param {number} retries The current retry attempt.
+         * @returns {Promise<object>} The JSON response from the API.
+         */
+        async function callGeminiApiWithBackoff(payload, retries = 0) {
+            const apiKey = ""; // Canvas will automatically provide this at runtime
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    // Handle HTTP errors (e.g., 429 Too Many Requests, 5xx Server Error)
+                    if (response.status === 429 && retries < MAX_RETRIES) {
+                        const delay = INITIAL_DELAY_MS * Math.pow(2, retries) + Math.random() * 500; // Add jitter
+                        console.warn(`Rate limit hit. Retrying in ${delay / 1000}s... (Attempt ${retries + 1})`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return callGeminiApiWithBackoff(payload, retries + 1);
+                    } else {
+                        const errorData = await response.json();
+                        throw new Error(`API error: ${response.status} ${response.statusText} - ${JSON.stringify(errorData)}`);
+                    }
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                throw error; // Re-throw to be caught by the calling function
+            }
+        }
+
+        /**
+         * Handles the generation of text using the Gemini API.
+         */
+        async function generateGeminiResponse() {
+            const prompt = geminiInput.value.trim();
+            if (!prompt) {
+                geminiResponseDiv.innerHTML = '<p class="text-red-500 text-center">Please enter a question.</p>';
+                return;
+            }
+
+            // Show loading state
+            geminiButton.disabled = true;
+            buttonText.textContent = 'Thinking...';
+            loadingSpinner.classList.remove('hidden');
+            geminiResponseDiv.innerHTML = '<p class="text-gray-400 text-center">Generating response...</p>';
+            responsePlaceholder.classList.add('hidden'); // Hide placeholder if it was visible
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+            const payload = {
+                contents: chatHistory
+            };
+
+            try {
+                const result = await callGeminiApiWithBackoff(payload);
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    geminiResponseDiv.innerHTML = `<p class="whitespace-pre-wrap">${text}</p>`; // Use pre-wrap for preserving formatting
+                } else {
+                    geminiResponseDiv.innerHTML = '<p class="text-red-500 text-center">No response or unexpected format from API.</p>';
+                }
+            } catch (error) {
+                geminiResponseDiv.innerHTML = `<p class="text-red-500 text-center">Failed to get response: ${error.message}</p>`;
+            } finally {
+                // Reset button state
+                geminiButton.disabled = false;
+                buttonText.textContent = 'Ask Gemini';
+                loadingSpinner.classList.add('hidden');
+                // If no actual response came, restore the placeholder
+                if (geminiResponseDiv.textContent.trim() === 'Generating response...') {
+                     geminiResponseDiv.innerHTML = '<p id="response-placeholder" class="text-gray-400 text-center">Your AI-generated response will appear here.</p>';
+                }
+            }
+        }
+
+        // Event listener for the Gemini button
+        geminiButton.addEventListener('click', generateGeminiResponse);
+
+        // Optional: Allow pressing Enter in textarea to trigger generation
+        geminiInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && !event.shiftKey) { // Shift+Enter for new line
+                event.preventDefault(); // Prevent default Enter behavior (new line)
+                generateGeminiResponse();
+            }
+        });
+    </script>
+</body>
+</html>
